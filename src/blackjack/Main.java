@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -48,7 +47,6 @@ public class Main extends Application {
         b2.setOnAction((a) -> {
             Image sad = new Image("sad-face.jpeg");
             ImageView iv = new ImageView(sad);
-            //root.getChildren().add(iv);
             root.setCenter(iv);
         });
         
