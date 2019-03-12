@@ -10,7 +10,7 @@ package blackjack;
  * @author elizabethsmikle
  */
 public enum Rank {
-    ACE("Ace",1),
+    ACE("ace",1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
@@ -20,9 +20,9 @@ public enum Rank {
     EIGHT("8", 8),
     NINE("9", 9),
     TEN("10", 10),
-    JACK("Jack", 10),
-    QUEEN("Queen", 10),
-    KING("King", 10);
+    JACK("jack", 10),
+    QUEEN("queen", 10),
+    KING("king", 10);
     
     private final String rankText;
     private final int rankValue;

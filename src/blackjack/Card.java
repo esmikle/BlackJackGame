@@ -5,28 +5,54 @@
  */
 package blackjack;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author elizabethsmikle
  */
 public class Card {
+
     private Suit suit;
     private Rank rank;
-    
-    public Card(Rank rank, Suit suit){
+    private Image img;
+
+    public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
-    
-    public String getSuit(){
+
+    public Card(Rank rank, Suit suit, Image img) {
+        this.rank = rank;
+        this.suit = suit;
+        this.img = img;
+    }
+
+    public String getSuit() {
         return suit.printSuit();
     }
-    
-    public int getRank(){
+
+    public int getRank() {
         return rank.getRank();
     }
-    
-    public String printCard(){
-        return rank.printRank()+" of "+suit.printSuit();
+
+    public void setImage(Image givenImage) {
+        this.img = givenImage;
     }
-}    
+
+    public ImageView getImage() {
+        ImageView viewer = new ImageView(img);
+        viewer.setPreserveRatio(true);
+        viewer.setFitWidth(100);
+        return viewer;
+    }
+
+    public String printCard() {
+        return rank.printRank() + " of " + suit.printSuit();
+    }
+
+    public String GetFileName() {
+        return rank + "_of_" + suit + ".png";
+    }
+}
