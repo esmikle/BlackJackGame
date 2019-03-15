@@ -14,9 +14,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -40,6 +37,7 @@ public class Main extends Application {
         // Set up window
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root, 800, 600);
+        root.setStyle("-fx-background-color: #228B22;");
         primaryStage.setTitle("Blackjack");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -59,42 +57,75 @@ public class Main extends Application {
         root.setTop(dealerPanel);
         dealerPanel.setAlignment(Pos.CENTER);
 
-        // Initialize Deck
-        deck.initDeck();
-        deck.deal(player, dealer, 2);
-        player.showHand(playerPanel);
-        dealer.showHand(dealerPanel);
-        
+        Button start = new Button("Start");
+        start.setOnAction(e -> {
+            // Initialize Deck
+            deck.initDeck();
+            deck.shuffle();
+            deck.deal(player, dealer, 2);
+            player.showHand(playerPanel, false);
+            dealer.showHand(dealerPanel, false);
+        });
+
         // Hit button action 
         Button hit = new Button("Hit");
-        hit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                //dealToPlayer then check if player busted
-                deck.deal(player);
-                player.showHand(playerPanel);
-                if (player.isOver()) {
-                    // Message box player is busted
-                   Alert busted = new Alert(AlertType.INFORMATION, "You're Busted!", ButtonType.CLOSE);
-                   busted.showAndWait();
-                   root.setCenter(playerPanel);
-                }
-                // Player can continue
+        hit.setOnAction((ActionEvent e) -> {
+            //dealToPlayer then check if player busted
+            deck.deal(player);
+            player.showHand(playerPanel, false);
+            if (player.calculateSum() > 21) {
+                // Message box player is busted
+                Alert busted = new Alert(AlertType.INFORMATION, "You're Busted!", ButtonType.CLOSE);
+                busted.showAndWait();
+                root.setCenter(playerPanel);
             }
         });
 
         // Stay Button action
         Button stay = new Button("Stay");
         stay.setOnAction((e) -> {
-            System.out.println("Staying");
+            String winner;
+            while (dealer.calculateSum() < 15 && isWinner() != dealer) {
+                deck.deal(dealer);
+                dealer.showHand(dealerPanel, false);
+            }
+            if (isWinner() == dealer) {
+                winner = "Dealer";
+            } else {
+                winner = "Player";
+            }
+            dealer.showHand(dealerPanel, true);
+            Alert win = new Alert(AlertType.INFORMATION, winner + " Wins!", ButtonType.CLOSE);
+            win.showAndWait();
+            root.setCenter(playerPanel);
+            
+        });
+        
+        Button clear = new Button("Clear");
+        clear.setOnAction(e -> {
+            playerPanel.getChildren().clear();
+            dealerPanel.getChildren().clear();
+            player.clearHand();
+            dealer.clearHand();
+            deck.clearHand();
         });
 
         // Add buttons to window
-        buttonPanel.getChildren().addAll(hit, stay);
+        buttonPanel.getChildren().addAll(start, hit, stay, clear);
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    private Hand isWinner() {
+        if (dealer.calculateSum() < 21 && dealer.calculateSum() > player.calculateSum()) {
+            return dealer;
+        } else if (dealer.calculateSum() == 21) {
+            return dealer;
+        } else if (player.calculateSum() > 21){
+            return dealer;
+        } else
+            return player;
+    }
 }

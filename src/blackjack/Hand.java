@@ -27,23 +27,42 @@ public class Hand {
     public Card removeCard(int index) {
         return hand.remove(index);
     }
+    
+    public Card getCard(int index) {
+        return hand.get(index);
+    }
+    
+    public void setCard(int index, Card c) {
+        hand.set(index, c);
+    }
 
-    public void showHand(FlowPane panel) {
+    public void showHand(FlowPane panel, boolean win) {
+
         panel.getChildren().clear();
         for (Card c : hand) {
+            if (win) {
+                c.setFace(true);
+            }
             panel.getChildren().add(c.getImage());
             c.getImage().setPreserveRatio(true);
             c.getImage().setFitWidth(100);
         }
     }
 
-    public boolean isOver() {
+    public int calculateSum() {
         // CHALLENGE: Calculate the sum
         int sum = 0;
+        boolean hasAce = false;
         for (Card c : hand) {
             sum += c.getRank();
+            if(c.getRank() == 1){
+                hasAce = true;
+            }
         }
-        return sum > 21;
+        if(hasAce==true && sum <= 11){
+            sum += 10;
+        }
+        return sum;
     }
 
     public void clearHand() {

@@ -31,6 +31,9 @@ public class Deck extends Hand {
             player.addCard(c);
             
             c = this.removeCard(0);
+            if(i == 0){
+                c.setFace(false);
+            }
             dealer.addCard(c);
         }
     }
@@ -41,7 +44,13 @@ public class Deck extends Hand {
     }
 
     public void shuffle() {
-
+        for(int i = 0; i < 51; i++){
+            int rand = (int)(1+Math.random()*50);
+            Card pick = this.getCard(rand);
+            Card last = this.getCard(i);
+            this.setCard(i, pick);
+            this.setCard(rand, last);
+        }
     }
 
 }

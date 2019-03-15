@@ -25,11 +25,15 @@ public enum Rank {
     KING("king", 10);
     
     private final String rankText;
-    private final int rankValue;
+    private int rankValue;
     
     private Rank(String rankText, int rank){
         this.rankText = rankText;
         this.rankValue = rank;
+    }
+    
+    public void changeRank(int value){
+        this.rankValue = value;
     }
     
     public int getRank() {
