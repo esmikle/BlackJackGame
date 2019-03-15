@@ -7,7 +7,6 @@ package blackjack;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -112,7 +111,7 @@ public class Main extends Application {
 
         // Add buttons to window
         buttonPanel.getChildren().addAll(start, hit, stay, clear);
-    }
+   }
 
     public static void main(String[] args) {
         launch(args);
