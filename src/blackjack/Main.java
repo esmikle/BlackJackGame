@@ -77,11 +77,7 @@ public class Main extends Application {
                 Alert busted = new Alert(AlertType.INFORMATION, "You're Busted!", ButtonType.CLOSE);
                 busted.showAndWait();
                 root.setCenter(playerPanel);
-                playerPanel.getChildren().clear();
-                dealerPanel.getChildren().clear();
-                player.clearHand();
-                dealer.clearHand();
-                deck.clearHand();
+                clearBoard();
             }
         });
 
@@ -102,22 +98,10 @@ public class Main extends Application {
             Alert win = new Alert(AlertType.INFORMATION, winner + " Wins!", ButtonType.CLOSE);
             win.showAndWait();
             root.setCenter(playerPanel);
-            playerPanel.getChildren().clear();
-            dealerPanel.getChildren().clear();
-            player.clearHand();
-            dealer.clearHand();
-            deck.clearHand();
+            clearBoard();
 
         });
 
-        Button clear = new Button("Clear");
-        clear.setOnAction(e -> {
-            playerPanel.getChildren().clear();
-            dealerPanel.getChildren().clear();
-            player.clearHand();
-            dealer.clearHand();
-            deck.clearHand();
-        });
 
         Button quit = new Button("Quit");
         quit.setOnAction(e -> {
@@ -125,7 +109,7 @@ public class Main extends Application {
         });
 
         // Add buttons to window
-        buttonPanel.getChildren().addAll(start, hit, stay, clear, quit);
+        buttonPanel.getChildren().addAll(start, hit, stay, quit);
     }
 
     public static void main(String[] args) {
@@ -142,5 +126,13 @@ public class Main extends Application {
         } else {
             return player;
         }
+    }
+
+    private void clearBoard() {
+        playerPanel.getChildren().clear();
+        dealerPanel.getChildren().clear();
+        player.clearHand();
+        dealer.clearHand();
+        deck.clearHand();
     }
 }
